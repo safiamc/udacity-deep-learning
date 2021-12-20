@@ -4,7 +4,7 @@ from sagemaker import get_execution_role
 hyperparameters = {"epochs": "2", "batch-size": "32", "test-batch-size": "100", "lr": "0.001"} # TODO: Include the hyperparameters your script will need over here.
 
 estimator = estimator = PyTorch(
-    entry_point="scripts/pytorch_mnist.py",
+    entry_point="scripts/pytorch_cifar.py",
     base_job_name="sagemaker-script-mode",
     role=get_execution_role(),
     instance_count=1,
