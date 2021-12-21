@@ -133,7 +133,7 @@ def input_fn(request_body, request_content_type):
     
 def predict_fn(input_object, model):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    new_input = torch.unsqueeze(input_object, 0)
+    new_input = torch.unsqueeze(input_object, 0).float()
     model.to(device)
     model.eval()
     with torch.no_grad():
