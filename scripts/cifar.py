@@ -125,21 +125,14 @@ def model_fn(model_dir):
         model.load_state_dict(torch.load(f))
     return model
 
-def input_fn(request_body, request_content_type):
-    if request_content_type == 'application/python-pickle':
-        return torch.load(BytesIO(request_body))
-    else:
-        pass
-    
 def predict_fn(input_object, model):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    new_input = torch.unsqueeze(input_object, 0).float()
     model.to(device)
     model.eval()
     with torch.no_grad():
-        return model(new_input.to(device))
+        input_object = input_object.float()
+        return model(input_object.to(device))
     
-
 def save_model(model, model_dir):
     logger.info("Saving the model.")
     path = os.path.join(model_dir, "model.pth")
